@@ -23,7 +23,9 @@ a:hover{text-decoration:underline}
 .container{max-width:var(--maxw); margin:0 auto; padding:0 18px}
 
 /* hr{border:none; border-top:1px solid var(--rule); margin:22px 0} */
-hr{border:none; margin:22px 0}
+/* hr{border:none; margin:22px 0} */
+hr{border:none; margin:0px 0}
+
 
 
 
@@ -317,14 +319,13 @@ canvas.chart{width:100%; height:340px; display:block;}
 
 
 .contrib-list{
-  margin: 10px 0 0;
-  padding-left: 0;              /* 关键：去掉默认左缩进 */
-  list-style-position: inside;  /* 关键：bullet 放进内容框，从最左开始 */
+  margin: 0;
+  padding-left: 0;
+  list-style-position: inside;
 }
-
 .contrib-list li{
   margin: 0 0 10px 0;
-  line-height: 1.2;
+  line-height: 1.45; /* 1.2 稍微挤，建议放松一点 */
 }
 
 /* ===== Visual sections ===== */
@@ -520,7 +521,8 @@ canvas.chart{width:100%; height:340px; display:block;}
 .carousel-container {
   position: relative;
   max-width: 1000px;
-  margin: 30px auto;
+  /* margin: 30px auto;*/
+  margin: var(--space-block) auto 0;
   padding: 20px 0;
   overflow: hidden;
 }
@@ -624,3 +626,46 @@ canvas.chart{width:100%; height:340px; display:block;}
 .nav-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
 .prev-btn { left: 20px; }
 .next-btn { right: 20px; }
+
+
+
+:root {
+  /* ... 原有变量 ... */
+  --gap-section: 40px;    /* 大章节 (Section) 之间的距离 */
+  --gap-sub: 20px;        /* 小标题 (h3/Subsection) 之间的距离 */
+  --gap-element: 16px;    /* 标题与下方内容 (文字/图片/视频) 之间的距离 */
+}
+
+/* 1. 统一 Section 间距 */
+section {
+  margin-bottom: var(--gap-section);
+}
+
+/* 2. 统一 h2 (Section 标题) 样式 */
+h2 {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-top: 0; 
+  margin-bottom: var(--gap-element); /* 标题离内容的距离 */
+}
+
+/* 3. 统一 h3 (Subsection 标题) 样式 */
+h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: var(--gap-sub);       /* 距离上方内容的距离 */
+  margin-bottom: var(--gap-element);    /* 距离下方内容的距离 */
+}
+
+/* 4. 统一分割线 (hr) 的间距 */
+/* 建议将 hr 放在 section 之间，或者直接移除 hr 依靠 section 的 margin-bottom */
+/* hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: var(--gap-section) 0;
+} */
+
+#overview{
+  padding-top: 40px;   /* 可改成 24 / 32 / 40 */
+}
