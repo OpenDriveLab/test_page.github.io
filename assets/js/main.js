@@ -742,3 +742,135 @@ function initDemoRotator(){
 }
 
 window.addEventListener('load', ()=>{ try{ initDemoRotator(); }catch(e){} });
+const track = document.getElementById('track');
+let cards = document.querySelectorAll('.carousel-card');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+// 配置
+const cardWidthPercent = 60;
+const gapPx = 20;
+
+// 1. 克隆首尾
+const firstClone = cards[0].cloneNode(true);
+const lastClone = cards[cards.length - 1].cloneNode(true);
+track.appendChild(firstClone);
+track.insertBefore(lastClone, cards[0]);
+
+// 重新获取列表
+let allCards = document.querySelectorAll('.carousel-card');
+let currentIndex = 1;
+let isTransitioning = false;
+
+// 初始化
+updateTrack(false);
+updateActive();
+
+// --- 按钮事件 ---
+nextBtn.addEventListener('click', () => {
+  if (isTransitioning) return;
+  if (currentIndex >= allCards.length - 1) return; // 保护
+  
+  currentIndex++;
+  isTransitioning = true;
+  updateTrack(true);
+  updateActive();
+});
+
+prevBtn.addEventListener('click', () => {
+  if (isTransitioning) return;
+  if (currentIndex <= 0) return; // 保护
+
+  currentIndex--;
+  isTransitioning = true;
+  updateTrack(true);
+  updateActive();
+});
+
+// --- 关键：过渡结束后的无缝重置 ---
+track.addEventListener('transitionend', () => {
+  isTransitioning = false;
+
+  const totalRealCards = allCards.length - 2; // 3张
+  let needsReset = false;
+  let newIndex = currentIndex;
+
+  // 判断是否到了克隆边缘
+  if (currentIndex === allCards.length - 1) {
+    newIndex = 1; // 回到真实第1张
+    needsReset = true;
+  } else if (currentIndex === 0) {
+    newIndex = totalRealCards; // 回到真实最后一张
+    needsReset = true;
+  }
+
+  if (needsReset) {
+    // 执行无缝替换
+    handleReset(newIndex);
+  }
+});
+
+// --- 核心修复函数：处理重置 ---
+function handleReset(targetIndex) {
+  // 1. 获取当前显示的克隆卡片 和 目标真身卡片
+  const currentCloneCard = allCards[currentIndex];
+  const targetRealCard = allCards[targetIndex];
+  
+  // 2. 视频时间同步！(关键修复点)
+  // 把克隆视频的播放时间，赋给真身视频，保证画面不跳变
+  const cloneVideo = currentCloneCard.querySelector('video');
+  const realVideo = targetRealCard.querySelector('video');
+  if (cloneVideo && realVideo) {
+    realVideo.currentTime = cloneVideo.currentTime;
+    if (!cloneVideo.paused) realVideo.play();
+  }
+
+  // 3. 冻结动画！(关键修复点)
+  // 给 Track 和所有卡片加上 .no-transition，禁止任何 CSS 渐变
+  track.classList.add('no-transition');
+  allCards.forEach(c => c.classList.add('no-transition'));
+
+  // 4. 瞬间改变索引和位置
+  currentIndex = targetIndex;
+  updateTrack(false); 
+  
+  // 5. 瞬间更新 Active 状态
+  // 此时因为有 no-transition，scale(1) 和 opacity(1) 会立即生效，不会有过渡
+  updateActive();
+
+  // 6. 强制浏览器重绘 (Reflow)
+  // 这一行非常重要，它迫使浏览器立刻应用上面的改变
+  void track.offsetHeight;
+
+  // 7. 恢复动画
+  // 使用 requestAnimationFrame 在下一帧移除 no-transition
+  requestAnimationFrame(() => {
+    track.classList.remove('no-transition');
+    allCards.forEach(c => c.classList.remove('no-transition'));
+  });
+}
+
+// --- 基础更新函数 ---
+function updateTrack(animate) {
+  if (animate) {
+    track.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+  } else {
+    track.style.transition = 'none';
+  }
+  const centerOffset = 20; 
+  const val = `calc(${centerOffset}% - ${currentIndex} * (${cardWidthPercent}% + ${gapPx}px))`;
+  track.style.transform = `translateX(${val})`;
+}
+
+function updateActive() {
+  allCards.forEach((card, index) => {
+    if (index === currentIndex) {
+      card.classList.add('is-active');
+      // 确保播放
+      const v = card.querySelector('video');
+      if(v) v.play();
+    } else {
+      card.classList.remove('is-active');
+    }
+  });
+}

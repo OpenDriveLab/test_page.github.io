@@ -105,35 +105,44 @@
   
 
 
-  <h3>Continuous Success achieved by RISE</h3>
-  <p class="small">Double-click any video to open a large modal player.</p>
+<h3>Continuous Success achieved by RISE</h3>
+<p class="small">We disgn three long-horizon and challenging real-world tasks to evaluate our method.</p>
 
-  <div class="demo-rotator-wrap" id="demoRotatorWrap" style="margin-top:12px">
-    <div class="demo-rotator-sticky">
-      <div class="demo-rotator" id="demoRotator">
-        <article class="demo-card is-active" data-idx="0">
-          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4')">
-            <video src="https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-          <div class="caption" style="font-size: 18px;"><b>Dynamic Brick Sorting (Continuous Success)</b></div>
-        </article>
-        <article class="demo-card" data-idx="1">
-          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4')">
-            <video src="https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-          <div class="caption" style="font-size: 18px;"><b>Backpack Packing (Continuous Success)</b></div>
-        </article>
-        <article class="demo-card" data-idx="2">
-          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp')">
-            <video src="https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-            <div class="caption" style="font-size: 18px;"><b>Box Closing (Continuous Success)</b></div>
-        </article>
-      </div>
+<div class="carousel-container">
+  <button class="nav-btn prev-btn" id="prevBtn">
+    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+  
+  <div class="carousel-window">
+    <div class="carousel-track" id="track">
+      <article class="carousel-card">
+        <div class="video-wrapper">
+          <video src="https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="caption">Task 1: Dynamic Brick Sorting</div>
+      </article>
+
+      <article class="carousel-card">
+        <div class="video-wrapper">
+          <video src="https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="caption">Task 2: Backpack Packing</div>
+      </article>
+
+      <article class="carousel-card">
+        <div class="video-wrapper">
+          <video src="https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        </div>
+        <div class="caption">Task 3: Box Closing</div>
+      </article>
     </div>
   </div>
 
-  <hr/>
+  <button class="nav-btn next-btn" id="nextBtn">
+    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+<hr/>
 
   <!-- <h3>RISE in Real-World Tasks: Uncut & Continuous</h3>
   <div class="grid3" style="margin-top:10px">
@@ -157,7 +166,7 @@
   <div>
     <div class="media">
       <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
-      <video src="https://assets.kinetixai.cn/rise2/teaser.mp4" autoplay muted loop playsinline></video>
+      <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/teaser.mp4" autoplay muted loop playsinline></video>
     </div>
     <div class="caption">
         <b>RISE</b> shifts the
@@ -177,13 +186,13 @@
     <div>
       <div class="media">
         <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
-        <video src="https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>RISE</b> (Dynamic Brick Sorting)</div>
     </div>
     <div>
       <div class="media">
-        <video src="https://assets.kinetixai.cn/rise2/conveyor_baseline_720p.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/conveyor_baseline_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>Baselines</b> (Dynamic Brick Sorting)</div>
     </div>
@@ -191,26 +200,26 @@
     <div>
       <div class="media">
         <!-- <video src="https://assets.kinetixai.cn/rise/backpack_packing.mp4" autoplay muted loop playsinline></video> -->
-        <video src="https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>RISE</b> (Backpack Packing)</div>
     </div>
     <div>
       <div class="media">
-        <video src="https://assets.kinetixai.cn/rise2/backpack_baseline_720.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/backpack_baseline_720.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>Baselines</b> (Backpack Packing)</div>
     </div>
 
     <div>
       <div class="media">
-        <video src="https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>RISE</b> (Box Closing)</div>
     </div>
     <div>
       <div class="media">
-        <video src="https://assets.kinetixai.cn/rise2/box_baseline_720p.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/box_baseline_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>Baselines</b> (Box Closing)</div>
     </div>
@@ -225,7 +234,7 @@
     
     <div>
       <div class="media">
-        <video src="https://assets.kinetixai.cn/rise/backpack_anti_disturbance_self_recovery_RISE.mp4" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise/backpack_anti_disturbance_self_recovery_RISE.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption">
         <b>Self-Correction & Robustness</b>
@@ -235,7 +244,7 @@
     <div>
       <div class="media">
         <!-- <video src="assets/videos/backpack_spatial_generalization.mp4" autoplay muted loop playsinline></video> -->
-        <video src="https://assets.kinetixai.cn/rise/backpack_spatial_generalization_RISE.mov" autoplay muted loop playsinline></video>
+        <video style="pointer-events: none;" src="https://assets.kinetixai.cn/rise/backpack_spatial_generalization_RISE.mov" autoplay muted loop playsinline></video>
       </div>
       <div class="caption">
         <b>Spatial Generalization</b>
@@ -283,7 +292,7 @@
   <div>
     <div class="media">
       <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
-      <video src="https://assets.kinetixai.cn/rise2/world_model.mp4" autoplay muted loop playsinline></video>
+      <video  style="pointer-events: none;" src="https://assets.kinetixai.cn/rise2/world_model.mp4" autoplay muted loop playsinline></video>
     </div>
   
     
@@ -298,7 +307,7 @@
   <div>
     <div class="media media-small">
       <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
-      <video class="small-video" src="https://assets.kinetixai.cn/rise2/self_improve.mp4" autoplay muted loop playsinline></video>
+      <video  style="pointer-events: none;" class="small-video" src="https://assets.kinetixai.cn/rise2/self_improve.mp4" autoplay muted loop playsinline></video>
     </div>
   
     
