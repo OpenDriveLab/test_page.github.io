@@ -105,6 +105,52 @@
 
 <main class="container mainwrap">
 
+<section id="Overview">
+  <h2>At a Glance</h2>
+ <h3>System Overview</h3>
+  <div style="margin-top:10px"></div>
+  
+  <div>
+    <div class="media">
+      <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
+      <video src="https://assets.kinetixai.cn/rise2/teaser.mp4" autoplay muted loop playsinline></video>
+    </div>
+    <div class="caption">
+        <b>RISE</b> shifts the 
+        RL environment to a <b>Compositional World Model</b>, which first emulates future observations for proposed actions, then
+        evaluates imagined states to derive advantage for policy improvement.
+    </div>
+  </div>
+
+
+<h3>Contributions</h3>
+<ul class="contrib-list">
+  <li>
+    We propose <b>RISE</b>, a principled framework for robotic reinforcement learning, that
+    enables autonomous self-improvement in a scalable and online manner.
+    RISE overcomes the physical restrictions posed by prior art by shifting
+    robotic interactions from physical environment to imaginative space.
+  </li>
+
+  <li>
+    At the core of this system is an online learning environment achieved by a
+    <b>Compositional World Model</b> that builds reliable dynamics and value estimates
+    for real-world tasks. We unveil critical design choices to derive stable learning
+    signals for policy improvement.
+  </li>
+
+  <li>
+    Through extensive experiments on <b>dexterous manipulation tasks</b>, we demonstrate
+    that RISE exhibits significantly higher performance compared to existing RL methods.
+  </li>
+</ul>
+
+
+
+  
+</section>
+
+
 <section id="demos">
   <h2>Real-World Autonomous Execution</h2>
   
@@ -137,7 +183,7 @@
       </div>
     </div>
   </div>
-
+  
   <hr/>
 
   <!-- <h3>RISE in Real-World Tasks: Uncut & Continuous</h3>
@@ -156,20 +202,7 @@
     </div>
   </div> -->
 
-  <h3>At a Glance</h3>
-  <div style="margin-top:10px"></div>
   
-  <div>
-    <div class="media">
-      <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
-      <video src="https://assets.kinetixai.cn/rise2/teaser.mp4" autoplay muted loop playsinline></video>
-    </div>
-    <div class="caption">
-        <b>RISE</b> shifts the 
-        RL environment to a <b>Compositional World Model</b>, which first emulates future observations for proposed actions, then
-        evaluates imagined states to derive advantage for policy improvement.
-    </div>
-  </div>
   <hr/>
 
   <h3>Comparison: RISE vs. Baselines</h3>
@@ -290,6 +323,11 @@
       <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
       <video src="https://assets.kinetixai.cn/rise2/world_model.mp4" autoplay muted loop playsinline></video>
     </div>
+    <div class="caption">
+        Inference pipeline that yields rewarded samples for policy
+        optimization. Both modules are compatible with multi-view
+        images.
+      </div>
   
     
   </div>
@@ -306,7 +344,13 @@
       <video class="small-video" src="https://assets.kinetixai.cn/rise2/self_improve.mp4" autoplay muted loop playsinline></video>
     </div>
   
-    
+    <div class="caption">
+        <b>Top</b>: Rollout stage. Prompted with an
+          optimal advantage, the rollout policy interacts with the world
+          model to produce rollout data. <b>Bottom</b>: Training stage. The
+          behavior policy is then trained to generate proper action under
+          an advantage-conditioning scheme.
+      </div>
   </div>
 
 
@@ -548,7 +592,7 @@
   </p>
 </section>
 
-
+<!-- 
 <section id="Contributions">
   <h2>Contributions</h2>
   <p>
@@ -569,7 +613,7 @@
     tasks, we demonstrate that RISE exhibits significantly higher
     performance compared to existing RL methods. <br/>
   </p>
-</section>
+</section> -->
 
 <!-- <hr/> -->
 
