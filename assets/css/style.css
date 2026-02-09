@@ -23,7 +23,9 @@ a:hover{text-decoration:underline}
 .container{max-width:var(--maxw); margin:0 auto; padding:0 18px}
 
 /* hr{border:none; border-top:1px solid var(--rule); margin:22px 0} */
-hr{border:none; margin:22px 0}
+/* hr{border:none; margin:22px 0} */
+hr{border:none; margin:0px 0}
+
 
 
 
@@ -317,14 +319,13 @@ canvas.chart{width:100%; height:340px; display:block;}
 
 
 .contrib-list{
-  margin: 5px 0 0;
-  padding-left: 0;              /* 关键：去掉默认左缩进 */
-  list-style-position: inside;  /* 关键：bullet 放进内容框，从最左开始 */
+  margin: 0;
+  padding-left: 0;
+  list-style-position: inside;
 }
-
 .contrib-list li{
   margin: 0 0 10px 0;
-  line-height: 1.2;
+  line-height: 1.45; /* 1.2 稍微挤，建议放松一点 */
 }
 
 /* ===== Visual sections ===== */
@@ -520,7 +521,8 @@ canvas.chart{width:100%; height:340px; display:block;}
 .carousel-container {
   position: relative;
   max-width: 1000px;
-  margin: 30px auto;
+  /* margin: 30px auto;*/
+  margin: var(--space-block) auto 0;
   padding: 20px 0;
   overflow: hidden;
 }
@@ -589,7 +591,7 @@ canvas.chart{width:100%; height:340px; display:block;}
   display: block;
 }
 
-.caption {
+.carousel-card .caption {
   margin-top: 15px;
   font-size: 18px;
   font-weight: bold;
@@ -624,3 +626,293 @@ canvas.chart{width:100%; height:340px; display:block;}
 .nav-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
 .prev-btn { left: 20px; }
 .next-btn { right: 20px; }
+
+
+
+:root {
+  /* ... 原有变量 ... */
+  --gap-section: 40px;    /* 大章节 (Section) 之间的距离 */
+  --gap-sub: 20px;        /* 小标题 (h3/Subsection) 之间的距离 */
+  --gap-element: 16px;    /* 标题与下方内容 (文字/图片/视频) 之间的距离 */
+}
+
+/* 1. 统一 Section 间距 */
+section {
+  margin-bottom: var(--gap-section);
+}
+
+/* 2. 统一 h2 (Section 标题) 样式 */
+h2 {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-top: 0; 
+  margin-bottom: var(--gap-element); /* 标题离内容的距离 */
+}
+
+/* 3. 统一 h3 (Subsection 标题) 样式 */
+h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: var(--gap-sub);       /* 距离上方内容的距离 */
+  margin-bottom: var(--gap-element);    /* 距离下方内容的距离 */
+}
+
+/* 4. 统一分割线 (hr) 的间距 */
+/* 建议将 hr 放在 section 之间，或者直接移除 hr 依靠 section 的 margin-bottom */
+/* hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: var(--gap-section) 0;
+} */
+
+#overview{
+  padding-top: 40px;   /* 可改成 24 / 32 / 40 */
+}
+
+
+
+
+/* =========================
+   Responsive foundation
+   ========================= */
+
+/* 让媒体元素天然不溢出 */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 避免长单词/链接把布局撑爆 */
+h1, h2, h3, p, li, .caption, .small {
+  overflow-wrap: anywhere;
+}
+
+/* 更稳的容器内边距（桌面->手机渐进） */
+.container {
+  width: min(100%, var(--maxw));
+  padding-left: clamp(12px, 3.5vw, 18px);
+  padding-right: clamp(12px, 3.5vw, 18px);
+}
+
+/* =========================
+   Tablet (<= 1024px)
+   ========================= */
+@media (max-width: 1024px) {
+  :root { --maxw: 980px; }
+
+  .hero-title { font-size: clamp(30px, 5.2vw, 44px); }
+  .hero-subtitle { font-size: 16px; }
+  .hero-meta { font-size: 16px; }
+  .hero-affiliations { font-size: 14px; }
+
+  .grid3 { grid-template-columns: 1fr 1fr; }
+  .results-grid { grid-template-columns: 1fr; } /* 结果图在平板改单列更清晰 */
+}
+
+/* =========================
+   Mobile (<= 768px)
+   ========================= */
+@media (max-width: 768px) {
+  /* 顶栏改为可横向滑动，避免挤成两行导致高度混乱 */
+  .topbar .row {
+    gap: 10px;
+    padding: 8px 0;
+  }
+  .brand {
+    font-size: 14px;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+  .nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 10px;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  /* Hero 区 */
+  .hero-video {
+    min-height: 520px;
+    height: 88vh;
+  }
+  .hero-overlay-inner {
+    transform: translateY(0);   /* 手机上取消上移，防止信息被裁切 */
+    padding: 0 12px;
+  }
+  .hero-links {
+    margin-top: 8px;
+    gap: 8px;
+  }
+  .hero-links .btn {
+    padding: 6px 9px;
+    font-size: 12px;
+  }
+  .hero-title {
+    font-size: clamp(24px, 7.2vw, 34px);
+    line-height: 1.12;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+    margin-top: 8px;
+    max-width: 100%;
+  }
+  .hero-meta {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .hero-affiliations {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  .scrollhint { display: none; } /* 手机上容易遮挡内容 */
+
+  /* 标题层级间距统一一点 */
+  h2 { font-size: 24px; margin-top: 20px; }
+  h3 { font-size: 17px; margin-top: 12px; }
+  p, li { font-size: 14px; }
+
+  /* 全部双/三列在手机改单列 */
+  .grid2, .grid3, .results-grid, .ablation-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  /* 卡片/工具栏更紧凑 */
+  .card { padding: 12px; }
+  .toolbar {
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .legend { gap: 8px; }
+
+  /* Contributions 列表在手机保持可读 */
+  .contrib-list {
+    padding-left: 18px;           /* 手机上建议恢复一点缩进，可读性更好 */
+    list-style-position: outside; /* bullet 与正文分离，不挤 */
+    margin-top: 8px;
+  }
+  .contrib-list li {
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  /* 轮播卡片在手机放宽，按钮缩小 */
+  .carousel-container {
+    margin: 18px auto;
+    padding: 8px 0;
+  }
+  .carousel-track { gap: 12px; }
+  .carousel-card {
+    flex: 0 0 86%;
+    max-width: 86%;
+  }
+  .nav-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .prev-btn { left: 6px; }
+  .next-btn { right: 6px; }
+
+  /* 图表高度减少，避免首屏过长 */
+  canvas.chart { height: 280px !important; }
+
+  /* BibTeX 代码块可横向滚动（你本来有 overflow:auto，这里补充触摸体验） */
+  .code {
+    font-size: 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* =========================
+   Small phones (<= 420px)
+   ========================= */
+@media (max-width: 420px) {
+  .hero-video {
+    min-height: 500px;
+    height: 84vh;
+  }
+  .hero-title { font-size: 22px; }
+  .hero-subtitle { font-size: 13px; }
+  .hero-meta, .hero-affiliations { font-size: 11.5px; }
+
+  .btn { font-size: 12px; padding: 6px 8px; }
+  .caption { font-size: 12px; }
+  canvas.chart { height: 250px !important; }
+}
+
+
+/* ===== Mobile carousel centering fix ===== */
+@media (max-width: 768px) {
+  .carousel-container{
+    max-width: 100%;
+    margin: 16px auto;
+    padding: 8px 0 44px; /* 底部给 caption 留空间 */
+    overflow: visible;
+  }
+
+  .carousel-window{
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  .carousel-track{
+    display: flex;
+    align-items: center;
+    justify-content: center;   /* 关键：轨道内容居中 */
+    gap: 0;                    /* 关键：去掉间隔避免偏移 */
+    padding: 0;
+    transform: none !important; /* 若 JS/旧样式有 transform，先压住 */
+  }
+
+  .carousel-card{
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    opacity: 0;
+    transform: none !important;
+    filter: none !important;
+    transition: opacity .25s ease;
+  }
+
+  .carousel-card.is-active{
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .video-wrapper{
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+  }
+
+  /* 只显示当前卡片标题，且居中 */
+  .carousel-card .caption{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  /* 按钮垂直居中到视频中线，并贴边 */
+  .nav-btn{
+    top: calc(50% - 22px);   /* 对齐视频视觉中心 */
+    width: 42px;
+    height: 42px;
+    z-index: 5;
+  }
+  .prev-btn{ left: 8px; }
+  .next-btn{ right: 8px; }
+}
