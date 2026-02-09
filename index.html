@@ -20,8 +20,8 @@
         <a href="#bibtex">BibTeX</a>
       </nav>
       <div class="spacer"></div>
-      <a class="btn" href="assets/paper.pdf">Paper</a>
-      <a class="btn" href="#" onclick="alert('Add code link here.'); return false;">Code</a>
+      <!-- <a class="btn" href="assets/paper.pdf">Paper</a>
+      <a class="btn" href="#" onclick="alert('Add code link here.'); return false;">Code</a> -->
     </div>
   </div>
 </div>
@@ -48,10 +48,10 @@
         <a class="btn" href="#" onclick="alert('Add video link here.'); return false;">Video</a>
       </div>
 
-      <div class="hero-actions" id="heroActions">
+      <!-- <div class="hero-actions" id="heroActions">
         <button class="iconbtn" id="muteBtn" type="button">🔇 Muted</button>
         <button class="iconbtn" id="downBtn" type="button">↓ Explore</button>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -77,20 +77,20 @@
     <div class="demo-rotator-sticky">
       <div class="demo-rotator" id="demoRotator">
         <article class="demo-card is-active" data-idx="0">
-          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/103806.mp4')">
-            <video src="https://assets.kinetixai.cn/rise2/103806.mp4" controls autoplay muted loop playsinline preload="metadata"></video>
+          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4')">
+            <video src="https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
           </div>
           <div class="caption" style="font-size: 18px;"><b>Dynamic Brick Sorting (Continuous Success)</b></div>
         </article>
         <article class="demo-card" data-idx="1">
-          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/103813.mp4')">
-            <video src="https://assets.kinetixai.cn/rise2/103813.mp4" controls autoplay muted loop playsinline preload="metadata"></video>
+          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4')">
+            <video src="https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
           </div>
           <div class="caption" style="font-size: 18px;"><b>Backpack Packing (Continuous Success)</b></div>
         </article>
         <article class="demo-card" data-idx="2">
-          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise/box_closing.mp4')">
-            <video src="https://assets.kinetixai.cn/rise/box_closing.mp4" controls autoplay muted loop playsinline preload="metadata"></video>
+          <div class="media" ondblclick="openModal('https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp')">
+            <video src="https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline preload="metadata"></video>
           </div>
             <div class="caption" style="font-size: 18px;"><b>Box Closing (Continuous Success)</b></div>
         </article>
@@ -116,9 +116,22 @@
     </div>
   </div> -->
 
-  <h3>Qualitative Comparison: RISE vs. Baselines</h3>
+  <h3>At a Glance</h3>
+  <div style="margin-top:10px"></div>
+  
+  <div>
+    <div class="media">
+      <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
+      <video src="https://assets.kinetixai.cn/rise2/teaser.mp4" autoplay muted loop playsinline></video>
+    </div>
+  
+    
+  </div>
+  <hr/>
+
+  <h3>Comparison: RISE vs. Baselines</h3>
   <p class="small">
-    Left: <b>RISE (Ours)</b>. Right: <b>Baselines</b> (Composite video including <i>π</i><sub>0.5</sub>, <i>π</i><sub>0.5</sub>+DAgger, <i>π</i><sub>0.5</sub>+PPO, <i>π</i><sub>0.5</sub>+DSRL, RECAP).
+    Left: <b>RISE (Ours)</b>. Right: <b>Baselines</b> (Composite video including <i>π</i><sub>0.5</sub>, <i>π</i><sub>0.5</sub>+DSRL, RECAP).
   </p>
   
   <div class="grid2" style="margin-top:10px">
@@ -126,13 +139,13 @@
     <div>
       <div class="media">
         <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
-        <video src="https://assets.kinetixai.cn/rise2/103806.mp4" autoplay muted loop playsinline></video>
+        <video src="https://assets.kinetixai.cn/rise2/conveyor_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>RISE</b> (Dynamic Brick Sorting)</div>
     </div>
     <div>
       <div class="media">
-        <video src="assets/videos/baselines_brick.mp4" autoplay muted loop playsinline></video>
+        <video src="https://assets.kinetixai.cn/rise2/conveyor_baseline_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>Baselines</b> (Dynamic Brick Sorting)</div>
     </div>
@@ -140,26 +153,26 @@
     <div>
       <div class="media">
         <!-- <video src="https://assets.kinetixai.cn/rise/backpack_packing.mp4" autoplay muted loop playsinline></video> -->
-        <video src="https://assets.kinetixai.cn/rise2/103813.mp4" autoplay muted loop playsinline></video>
+        <video src="https://assets.kinetixai.cn/rise2/backpack_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>RISE</b> (Backpack Packing)</div>
     </div>
     <div>
       <div class="media">
-        <video src="assets/videos/baselines_backpack.mp4" autoplay muted loop playsinline></video>
+        <video src="https://assets.kinetixai.cn/rise2/backpack_baseline_720.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>Baselines</b> (Backpack Packing)</div>
     </div>
 
     <div>
       <div class="media">
-        <video src="https://assets.kinetixai.cn/rise/box_closing.mp4" autoplay muted loop playsinline></video>
+        <video src="https://assets.kinetixai.cn/rise2/box_continuous_10_RISE_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>RISE</b> (Box Closing)</div>
     </div>
     <div>
       <div class="media">
-        <video src="assets/videos/baselines_box.mp4" autoplay muted loop playsinline></video>
+        <video src="https://assets.kinetixai.cn/rise2/box_baseline_720p.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="caption"><b>Baselines</b> (Box Closing)</div>
     </div>
@@ -225,24 +238,36 @@
 <section id="overview">
   <h2 class="section-title">Methodology</h2>
 
-  <div class="gallery" style="margin-top:12px">
-    <div class="figure">
-      <video autoplay muted loop playsinline preload="metadata" style="width:100%;height:320px;object-fit:cover;display:block;background:#000" src="https://assets.kinetixai.cn/rise/at_glance_cwm_workflow.mp4"></video>
-      <!-- <div class="cap">Replace with your main pipeline figure (world model + value + RL loop).</div> -->
+
+  
+  <h3>Key Component#1: Compositional World Model</h3>
+  <div style="margin-top:10px"></div>
+  
+  <div>
+    <div class="media">
+      <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
+      <video src="https://assets.kinetixai.cn/rise2/world_model.mp4" autoplay muted loop playsinline></video>
     </div>
-    <!-- <div class="bigcard">
-      <h3 style="margin-top:0">Highlights</h3>
-      <ul class="small" style="margin:10px 0 0; padding-left:18px">
-        <li><b>Neural simulation at scale:</b> parallel imagination rollouts for safe RL.</li>
-        <li><b>Compositional design:</b> dynamics ↔ value modeled independently.</li>
-        <li><b>Interactive results:</b> switch tasks/metrics; normalized views; hover tooltips.</li>
-      </ul>
-      <div class="figure small" style="margin-top:12px">
-        <video autoplay muted loop playsinline preload="metadata" style="width:100%;height:180px;object-fit:cover;display:block;background:#000" src="https://assets.kinetixai.cn/rise/at_glance_self_improve.mp4"></video>
-        <div class="cap">Reserve a slot for failure analysis / qualitative improvements.</div>
-      </div>
-    </div> -->
+  
+    
   </div>
+
+  <hr/>
+
+
+  <h3>Key Component#2: Self-Improving Loop</h3>
+  <div style="margin-top:10px"></div>
+  
+  <div>
+    <div class="media media-small">
+      <!-- <video src="https://assets.kinetixai.cn/rise/dynamic_brick_sorting.mp4" autoplay muted loop playsinline></video> -->
+      <video class="small-video" src="https://assets.kinetixai.cn/rise2/self_improve.mp4" autoplay muted loop playsinline></video>
+    </div>
+  
+    
+  </div>
+
+
 </section>
 
 
