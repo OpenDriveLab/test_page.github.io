@@ -182,16 +182,6 @@ function drawBarChartPerBar(cfg){
       ctx.lineWidth=2;
       ctx.stroke();
     }
-    
-    // Draw data label on top of bar (only if animation is near complete)
-    if(animProgress > 0.7 && bh > 20){
-      const labelText = cfg.yFmt ? cfg.yFmt(v) : v.toFixed(0);
-      ctx.fillStyle = "rgba(0,0,0,.85)";
-      ctx.font = "700 11px ui-sans-serif, system-ui";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "bottom";
-      ctx.fillText(labelText, x + barW/2, y - 4);
-    }
 
     bars.push({x,y,w:barW,h:bh,label:labels[i],value:v});
 
@@ -299,16 +289,6 @@ function drawGroupedBarChart(cfg){
       const y = pad.t + plotH - bh;
       ctx.fillStyle=s.color;
       drawRoundedBar(ctx, x,y,barW*0.92,bh,6);
-      
-      // Draw data label on grouped bars
-      if(animProgress > 0.7 && bh > 15){
-        const labelText = cfg.yFmt ? cfg.yFmt(v) : v.toFixed(0);
-        ctx.fillStyle = "rgba(0,0,0,.75)";
-        ctx.font = "600 9px ui-sans-serif, system-ui";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "bottom";
-        ctx.fillText(labelText, x + barW*0.92/2, y - 3);
-      }
       
       bars.push({x,y,w:barW*0.92,h:bh,label:labels[i],series:s.name,value:v});
     }
@@ -445,7 +425,7 @@ function setupCharts(){
     // title removed - now in HTML h4
     labels: C.offline_ratio.ratio.map(r=>`ratio ${r}`),
     series:[
-      {name:"Sort Success Rate", values:C.offline_ratio.sort, color:"rgba(91,124,250,.72)"},
+      {name:"Sort Accuracy", values:C.offline_ratio.sort, color:"rgba(91,124,250,.72)"},
       {name:"Pick&Place Success Rate", values:C.offline_ratio.pick, color:"rgba(168,85,247,.55)"},
       {name:"Complete Success Rate", values:C.offline_ratio.comp, color:"rgba(120,140,170,.55)"},
     ],
@@ -459,7 +439,7 @@ function setupCharts(){
     // title removed - now in HTML h4
     labels: C.online_integration.labels,
     series:[
-      {name:"Sort Success Rate", values:C.online_integration.sort, color:"rgba(91,124,250,.72)"},
+      {name:"Sort Accuracy", values:C.online_integration.sort, color:"rgba(91,124,250,.72)"},
       {name:"Pick&Place Success Rate", values:C.online_integration.pick, color:"rgba(168,85,247,.55)"},
       {name:"Complete Success Rate", values:C.online_integration.comp, color:"rgba(120,140,170,.55)"},
     ],
