@@ -127,6 +127,10 @@ function drawBarChartPerBar(cfg){
     maxV = isPercentAxis ? 100 : 10;
   }
 
+  // Animation support
+  if(!canvas._animProgress) canvas._animProgress = 0;
+  const animProgress = canvas._animProgress;
+
   ctx.clearRect(0,0,W,H);
 
   const ticks = cfg.ticks || 5;
@@ -152,7 +156,8 @@ function drawBarChartPerBar(cfg){
 
   for(let i=0;i<n;i++){
     const v = values[i];
-    const bh = (v/maxV)*plotH;
+    const bhFull = (v/maxV)*plotH;
+    const bh = bhFull * animProgress; // Apply animation progress
     const x = pad.l + i*groupW + (groupW-barW)/2;
     const y = pad.t + plotH - bh;
 
@@ -232,6 +237,10 @@ function drawGroupedBarChart(cfg){
     maxV = isPercentAxis ? 100 : 10;
   }
 
+  // Animation support
+  if(!canvas._animProgress) canvas._animProgress = 0;
+  const animProgress = canvas._animProgress;
+
   ctx.clearRect(0,0,W,H);
 
   const ticks = cfg.ticks || 5;
@@ -261,7 +270,8 @@ function drawGroupedBarChart(cfg){
     for(let j=0;j<m;j++){
       const s = series[j];
       const v = s.values[i];
-      const bh = (v/maxV)*plotH;
+      const bhFull = (v/maxV)*plotH;
+      const bh = bhFull * animProgress; // Apply animation progress
       const x = gx + gap + j*barW;
       const y = pad.t + plotH - bh;
       ctx.fillStyle=s.color;
@@ -349,37 +359,61 @@ function setupCharts(){
       if(!data) continue;
       const labels = data.methods.map(simplifyMethod);
 
-      let values, yFmt, title, tipLabel;
+      let values, yFmt, tipLabel, htmlTitle;
       if(metric==="succ"){
         values = data.succ.slice();
         yFmt = (v)=>v.toFixed(0)+"%";
-        title = `${task}: Success (%)`;
+        htmlTitle = `${task}: Success (%)`;
         tipLabel = "Success:";
       }else{
         values = data.score.slice();
         yFmt = (v)=>v.toFixed(2);
-        title = `${task}: Score`;
+        htmlTitle = `${task}: Score`;
         tipLabel = "Score:";
+      }
+
+      // Update HTML title (h4 above canvas)
+      const canvasId = TASK_CANVAS[task].replace('#', '');
+      const canvasEl = document.getElementById(canvasId);
+      if(canvasEl){
+        // Find parent div, then find the h4 sibling before canvas-wrap
+        const parentDiv = canvasEl.closest('.canvas-wrap').parentElement;
+        const h4 = parentDiv.querySelector('h4');
+        if(h4){
+          h4.textContent = htmlTitle;
+        }
       }
 
       const outlineIdx = labels.findIndex(x=>x.includes("RISE"));
       const colors = labels.map(m=> m.includes("RISE") ? "rgba(91,124,250,.88)" : "rgba(120,140,170,.55)");
       const chartMax = (metric==="succ") ? 100 : null;
-      drawBarChartPerBar({canvas: TASK_CANVAS[task], labels, values, colors, outlineIdx, yFmt, title, tipLabel, max: chartMax});
+      // Remove 'title' parameter to hide chart internal title
+      drawBarChartPerBar({canvas: TASK_CANVAS[task], labels, values, colors, outlineIdx, yFmt, tipLabel, max: chartMax});
     }
   }
 
+  // Initialize charts with progress 0 (invisible bars)
+  for(const task of TASKS){
+    const canvasEl = q(TASK_CANVAS[task]);
+    if(canvasEl) canvasEl._animProgress = 0;
+  }
+  const ablOffline = q("#ablationOffline");
+  const ablOnline = q("#ablationOnline");
+  if(ablOffline) ablOffline._animProgress = 0;
+  if(ablOnline) ablOnline._animProgress = 0;
+
   metricSel.onchange = renderMainAll;
   renderMainAll();
-
+  
+  // Store redraw functions
   const r1 = drawGroupedBarChart({
     canvas:"#ablationOffline",
-    title:"Ablation: Offline data ratio",
+    // title removed - now in HTML h4
     labels: C.offline_ratio.ratio.map(r=>`ratio ${r}`),
     series:[
-      {name:"Pick&Place Succ.(%)", values:C.offline_ratio.pick, color:"rgba(91,124,250,.72)"},
-      {name:"Sort Acc.(%)", values:C.offline_ratio.sort, color:"rgba(168,85,247,.55)"},
-      {name:"Complete Succ.(%)", values:C.offline_ratio.comp, color:"rgba(120,140,170,.55)"},
+      {name:"Sort Success Rate", values:C.offline_ratio.sort, color:"rgba(91,124,250,.72)"},
+      {name:"Pick&Place Success Rate", values:C.offline_ratio.pick, color:"rgba(168,85,247,.55)"},
+      {name:"Complete Success Rate", values:C.offline_ratio.comp, color:"rgba(120,140,170,.55)"},
     ],
     yFmt:(v)=>v.toFixed(0)+"%",
     ticks:5,
@@ -388,17 +422,21 @@ function setupCharts(){
 
   const r2 = drawGroupedBarChart({
     canvas:"#ablationOnline",
-    title:"Ablation: Online action/state integration",
+    // title removed - now in HTML h4
     labels: C.online_integration.labels,
     series:[
-      {name:"Pick&Place Succ.(%)", values:C.online_integration.pick, color:"rgba(91,124,250,.72)"},
-      {name:"Sort Acc.(%)", values:C.online_integration.sort, color:"rgba(168,85,247,.55)"},
-      {name:"Complete Succ.(%)", values:C.online_integration.comp, color:"rgba(120,140,170,.55)"},
+      {name:"Sort Success Rate", values:C.online_integration.sort, color:"rgba(91,124,250,.72)"},
+      {name:"Pick&Place Success Rate", values:C.online_integration.pick, color:"rgba(168,85,247,.55)"},
+      {name:"Complete Success Rate", values:C.online_integration.comp, color:"rgba(120,140,170,.55)"},
     ],
     yFmt:(v)=>v.toFixed(0)+"%",
     ticks:5,
     boldLabels:["(✓,✓)"]
   });
+  
+  // Initial draw with 0 progress (invisible bars)
+  r1();
+  r2();
 
   let t=null;
   window.addEventListener("resize", ()=>{
@@ -407,6 +445,56 @@ function setupCharts(){
       renderMainAll(); r1(); r2();
     }, 120);
   }, {passive:true});
+
+  // Animation on scroll into view
+  const animateChartOnScroll = (canvas) => {
+    if(!canvas || canvas._animated) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting && !canvas._animated){
+          canvas._animated = true;
+          const duration = 800; // Animation duration in ms
+          const startTime = performance.now();
+          
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic for smooth deceleration
+            const eased = 1 - Math.pow(1 - progress, 3);
+            
+            canvas._animProgress = eased;
+            
+            // Redraw based on which chart type
+            if(canvas.id === 'mainChartBrick' || canvas.id === 'mainChartBackpack' || canvas.id === 'mainChartBox'){
+              renderMainAll();
+            } else if(canvas.id === 'ablationOffline'){
+              r1();
+            } else if(canvas.id === 'ablationOnline'){
+              r2();
+            }
+            
+            if(progress < 1){
+              requestAnimationFrame(animate);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+          observer.unobserve(canvas);
+        }
+      });
+    }, {threshold: 0.2}); // Trigger when 20% of chart is visible
+    
+    observer.observe(canvas);
+  };
+
+  // Setup animation for all charts
+  for(const task of TASKS){
+    const canvasEl = q(TASK_CANVAS[task]);
+    if(canvasEl) animateChartOnScroll(canvasEl);
+  }
+  animateChartOnScroll(q("#ablationOffline"));
+  animateChartOnScroll(q("#ablationOnline"));
 }
 
 window.addEventListener("load", ()=>{
