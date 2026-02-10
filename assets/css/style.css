@@ -917,37 +917,41 @@ h1, h2, h3, p, li, .caption, .small {
   .next-btn{ right: 8px; }
 }
 
+/* 基础设置 */
 .carousel-container {
   position: relative;
   max-width: 1000px;
   margin: 20px auto;
-  overflow: hidden;
-  user-select: none; /* 禁止选中文本 */
+  overflow: hidden; /* 隐藏溢出 */
+  user-select: none;
   -webkit-user-select: none;
 }
 
 .carousel-window {
   width: 100%;
   position: relative;
-  /* 蒙版让边缘融合 */
+  /* 边缘虚化 */
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
 .carousel-track {
   display: flex;
-  gap: 15px;
+  gap: 15px; /* 固定间距 15px */
   width: 100%;
   padding: 10px 0;
   cursor: grab;
-  /* 启用硬件加速 */
-  transform: translate3d(0, 0, 0); 
+  will-change: transform;
 }
+.carousel-track:active { cursor: grabbing; }
 
+/* --- 卡片核心样式 --- */
 .carousel-card {
+  /* 电脑端默认：60% */
   flex: 0 0 60%;
-  max-width: 60%;
-  transition: transform 0.4s ease-out, opacity 0.4s ease-out; /* 稍快一点 */
+  width: 60%;
+  
+  transition: transform 0.4s ease, opacity 0.4s ease;
   opacity: 0.3;
   transform: scale(0.9);
   display: flex;
@@ -957,35 +961,37 @@ h1, h2, h3, p, li, .caption, .small {
   z-index: 1;
 }
 
-/* --- 手机端适配 --- */
+/* 手机端适配：75% (留出一点边给按钮) */
 @media (max-width: 768px) {
   .carousel-card {
-    flex: 0 0 75%; /* 稍微改小一点点，留出缝隙给按钮 */
-    max-width: 75%;
+    flex: 0 0 75%;
+    width: 75%;
   }
 }
 
+/* 激活状态 */
 .carousel-card.is-active {
   opacity: 1;
   transform: scale(1);
   z-index: 10;
 }
 
+/* 禁止动画类 (用于瞬移) */
 .no-transition, .no-transition * {
   transition: none !important;
 }
 
+/* --- 视频区域 --- */
 .video-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   background: #000;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   transform: translateZ(0);
   
-  /* === 核心修复 === */
-  /* 彻底禁止视频层接收点击，确保点击直接穿透到下层或不挡住上层 */
+  /* 核心：彻底禁止视频层响应鼠标，让点击穿透到底下的图层 */
   pointer-events: none; 
 }
 
@@ -997,7 +1003,7 @@ h1, h2, h3, p, li, .caption, .small {
 }
 
 .caption {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 16px;
   font-weight: bold;
   color: #333;
@@ -1007,31 +1013,32 @@ h1, h2, h3, p, li, .caption, .small {
 }
 .carousel-card.is-active .caption { opacity: 1; }
 
-/* === 箭头修复 === */
+/* --- 按钮样式 (核弹级层级) --- */
 .nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 50px; /* 加大尺寸 */
+  width: 50px;
   height: 50px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   cursor: pointer;
-  
-  /* === 核弹级层级 === */
-  z-index: 9999; /* 保证没有任何东西能盖住它 */
-  
+  z-index: 9999; /* 保证最顶层 */
   display: flex;
   align-items: center;
   justify-content: center;
   color: #333;
   border: none;
-  -webkit-tap-highlight-color: transparent; /* 去掉手机点击蓝框 */
-  
-  /* 确保按钮自己可以被点 */
-  pointer-events: auto; 
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto; /* 恢复按钮的点击 */
 }
 
 .prev-btn { left: 10px; }
 .next-btn { right: 10px; }
+
+/* 手机上稍微把按钮往里收一点，防误触边缘 */
+@media (max-width: 768px) {
+  .prev-btn { left: 5px; }
+  .next-btn { right: 5px; }
+}
