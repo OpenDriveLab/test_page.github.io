@@ -396,18 +396,12 @@ canvas.chart{width:100%; height:340px; display:block;}
 }
 .hero-authors{
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
-.author-line{
-  display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: 8px 16px;
-  justify-content: flex-start;
   line-height: 1.6;
 }
-.author-line span{
+.hero-authors span{
   white-space: nowrap;
 }
 .hero-authors sup{
@@ -1085,8 +1079,7 @@ h1, h2, h3, p, li, .caption, .small {
   .hero-title { font-size: clamp(30px, 5.2vw, 44px); }
   .hero-subtitle { font-size: 16px; }
   .hero-meta { font-size: 16px; }
-  .hero-authors { gap: 5px; }
-  .author-line { gap: 7px 14px; }
+  .hero-authors { gap: 7px 14px; }
   .hero-affiliations { font-size: 14px; }
   .affiliation-row { gap: 5px 16px; }
 
@@ -1159,9 +1152,6 @@ h1, h2, h3, p, li, .caption, .small {
     font-size: 14px;
   }
   .hero-authors{
-    gap: 5px;
-  }
-  .author-line{
     gap: 6px 12px;
     font-size: 14px;
   }
@@ -1296,8 +1286,7 @@ h1, h2, h3, p, li, .caption, .small {
   .hero-title { font-size: 22px; }
   .hero-subtitle { font-size: 13px; }
   .hero-meta { font-size: 13px; }
-  .hero-authors { gap: 4px; }
-  .author-line { gap: 5px 10px; font-size: 13px; }
+  .hero-authors { gap: 5px 10px; font-size: 13px; }
   .hero-affiliations { font-size: 12px; }
   .affiliation-row { gap: 4px 10px; }
   .hero-notes-row { font-size: 11px; gap: 3px 10px; }
