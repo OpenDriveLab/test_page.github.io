@@ -4,6 +4,104 @@ const q = (s, el=document)=>el.querySelector(s);
 const qa = (s, el=document)=>[...el.querySelectorAll(s)];
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 
+/* ===== WeChat Browser Video Fix ===== */
+// 检测是否是微信浏览器
+function isWeChat(){
+  return /MicroMessenger/i.test(navigator.userAgent);
+}
+
+// 微信浏览器视频播放修复
+function setupWeChatVideoFix(){
+  if(!isWeChat()) return;
+  
+  console.log('WeChat browser detected - setting up video click-to-play');
+  
+  const videos = qa('video');
+  
+  videos.forEach(video => {
+    // 移除自动播放
+    video.removeAttribute('autoplay');
+    video.pause();
+    
+    // 添加播放提示覆盖层
+    const wrapper = video.parentElement;
+    if(!wrapper) return;
+    
+    // 检查是否已经有播放提示
+    if(wrapper.querySelector('.wechat-play-hint')) return;
+    
+    const playHint = document.createElement('div');
+    playHint.className = 'wechat-play-hint';
+    playHint.innerHTML = `
+      <div class="play-icon">▶</div>
+      <div class="play-text">点击播放</div>
+    `;
+    playHint.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      cursor: pointer;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+    `;
+    
+    const playIcon = playHint.querySelector('.play-icon');
+    playIcon.style.cssText = `
+      font-size: 48px;
+      margin-bottom: 8px;
+    `;
+    
+    const playText = playHint.querySelector('.play-text');
+    playText.style.cssText = `
+      font-size: 14px;
+      font-weight: 600;
+    `;
+    
+    // 确保 wrapper 是 relative 定位
+    const wrapperPosition = window.getComputedStyle(wrapper).position;
+    if(wrapperPosition === 'static'){
+      wrapper.style.position = 'relative';
+    }
+    
+    wrapper.appendChild(playHint);
+    
+    // 点击播放
+    const playVideo = () => {
+      video.play().then(() => {
+        playHint.remove();
+      }).catch(err => {
+        console.error('Video play failed:', err);
+      });
+    };
+    
+    playHint.addEventListener('click', playVideo);
+    playHint.addEventListener('touchstart', playVideo);
+  });
+  
+  // 全局触摸事件（备用方案）
+  let hasPlayedAny = false;
+  const globalPlayHandler = () => {
+    if(hasPlayedAny) return;
+    hasPlayedAny = true;
+    
+    videos.forEach(video => {
+      if(video.paused){
+        video.play().catch(() => {});
+      }
+    });
+  };
+  
+  document.addEventListener('touchstart', globalPlayHandler, {once: true, passive: true});
+}
+
 /* Active nav - Enhanced */
 function setupActiveNav(){
   const sections = qa("section[id]");
@@ -538,6 +636,7 @@ window.addEventListener("load", ()=>{
   setupBackToTop();
   setupFadeInAnimations();
   setupActiveNav();
+  setupWeChatVideoFix();
 });
 
 /* ===== Hero video interactions ===== */

@@ -1460,6 +1460,30 @@ h1, h2, h3, p, li, .caption, .small {
 
 main .caption { opacity: 1 !important; }
 
+/* ===== WeChat Video Play Hint ===== */
+.wechat-play-hint {
+  transition: opacity 0.3s ease;
+}
+
+.wechat-play-hint:hover {
+  background: rgba(0, 0, 0, 0.75) !important;
+}
+
+.wechat-play-hint .play-icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-overlay .hero-links {
     margin-top: 10px;      /* 可选：按钮离上方稍微留一点 */
